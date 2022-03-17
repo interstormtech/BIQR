@@ -1,0 +1,123 @@
+<?php
+//start session if it doesn't exist yet
+	if (session_status() === PHP_SESSION_NONE) {
+		session_start();
+	}
+
+//set up database connection
+	require_once './interstorm/dbconnect.php';
+
+//get userid and passed values
+	$user =& JFactory::getUser();
+	$userID = $user->id;
+
+//retrieve URL parameters
+	$commentPublicID = htmlspecialchars($_REQUEST['commentpublicid']);	
+	$content = htmlspecialchars($_REQUEST['content']);
+	$direction = htmlspecialchars($_REQUEST['direction']);
+	$hist = htmlspecialchars($_REQUEST['hist']);
+	$location = htmlspecialchars($_REQUEST['location']);
+	$method = htmlspecialchars($_REQUEST['method']);
+	$page = htmlspecialchars($_REQUEST['page']);
+	$partyPublicID = htmlspecialchars($_REQUEST['partypublicid']);
+	$postPublicID = htmlspecialchars($_REQUEST['postpublicid']);	
+	$publicID = htmlspecialchars($_REQUEST['publicid']);		
+	$searchTerm = htmlspecialchars($_REQUEST['search-term']);
+	$searchType = htmlspecialchars($_REQUEST['search-type']);
+	$tagType = htmlspecialchars($_REQUEST['tag-type']);
+	$userName = htmlspecialchars($_REQUEST['user']);
+
+
+//generic objects used below
+$DBarray = array();
+
+
+//start of method list 
+//call for getting the next post while recording the swipe direction on the current
+	if ($method == "post-next") {
+		$sql = "exec post.PostResponse_NextPost ?, ?, ?, ?, ?, ?, ?";
+		$params = array($userID, $direction, $location, $postPublicID, $partyPublicID, $searchTerm, $hist);
+		$stmt = sqlsrv_query( $conn, $sql, $params);
+	}
+
+
+//call for getting the comment while recording the swipe direction on the current
+	if ($method == "comment-next") {
+		$sql = "exec post.PostResponse_NextComment ?, ?, ?, ?, 1, 1";
+		$params = array($userID, $postPublicID, $commentPublicID, $direction);
+		$stmt = sqlsrv_query( $conn, $sql, $params);
+	}
+	
+	
+//call for getting the comment list (already swiped)
+	if ($method == "comment-list") {
+		$sql = "exec post.PostResponse_NextComment ?, ?, ?, ?, 2, ?";
+		$params = array($userID, $postPublicID, "", $direction, $page);
+		$stmt = sqlsrv_query( $conn, $sql, $params);
+	}	
+
+
+//call for getting recent chart details 
+	if ($method == "post-impression-detail") {
+		$sql = "exec post.PostStatsGrid_GetHTML ?, ?";
+		$params = array($userID, $postPublicID);
+		$stmt = sqlsrv_query( $conn, $sql, $params);
+	}
+
+
+//call for submitting comment
+	if ($method == "comment-submit") {
+		$sql = "exec post.PostComment_Set ?, ?, ?";
+		$params = array($userID, $postPublicID, $content);
+		$stmt = sqlsrv_query( $conn, $sql, $params);
+	}
+	
+	
+//call for marking something as a favorite (post / party / post-author (comment-author)
+	if ($method == "favorite-tag") {
+		$sql = "exec post.Favorite_Set ?, ?, ?";
+		$params = array($userID, $publicID, $tagType);
+		$stmt = sqlsrv_query( $conn, $sql, $params);
+	}	
+
+
+//get party list for drop down selection in header
+	if ($method == "get-party-list") {
+		$sql = "exec person.MemberParty_GetHTML ?";
+		$params = array($userID);
+		$stmt = sqlsrv_query( $conn, $sql, $params);
+	}	
+
+
+//get dashboard user stats
+	if ($method == "user_stats") {
+		$sql = "exec person.Person_Get ?";
+		$params = array($userID);
+		$stmt = sqlsrv_query( $conn, $sql, $params);	
+	}
+
+
+//get member impressions 
+	if ($method == "user-impression") {
+		$sql = "exec person.PersonImpressions_Get ?, ?, ?, ?, ?";
+		$params = array($userName, $userID, $searchTerm, $searchType, $page);
+		$stmt = sqlsrv_query( $conn, $sql, $params);	
+	}
+
+
+//end method list 
+//ensure DB didn't fail
+	if( $stmt === false) {
+		echo "Error in query preparation/execution.\n";  
+		die( print_r( sqlsrv_errors(), true));  
+	}
+
+//write DB to array
+	while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC)) {    
+		$DBarray[] = $row;
+	}
+
+//encode DB results as json
+	echo json_encode($DBarray);
+
+?>

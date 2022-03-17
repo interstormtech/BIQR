@@ -1,0 +1,1098 @@
+<style>
+html{box-sizing:border-box}*,*:before,*:after{box-sizing:inherit}
+html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}
+article,aside,details,figcaption,figure,footer,header,main,menu,nav,section{display:block}summary{display:list-item}
+audio,canvas,progress,video{display:inline-block}progress{vertical-align:baseline}
+audio:not([controls]){display:none;height:0}[hidden],template{display:none}
+a{background-color:transparent}a:active,a:hover{outline-width:0}
+abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}
+b,strong{font-weight:bolder}dfn{font-style:italic}mark{background:#ff0;color:#000}
+small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sub{bottom:-0.25em}sup{top:-0.5em}figure{margin:1em 40px}img{border-style:none}
+code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}hr{box-sizing:content-box;height:0;overflow:visible}
+button,input,select,textarea,optgroup{font:inherit;margin:0}optgroup{font-weight:bold}
+button,input{overflow:visible}button,select{text-transform:none}
+button,[type=button],[type=reset],[type=submit]{-webkit-appearance:button}
+button::-moz-focus-inner,[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner{border-style:none;padding:0}
+button:-moz-focusring,[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring{outline:1px dotted ButtonText}
+fieldset{border:1px solid #c0c0c0;margin:0 2px;padding:.35em .625em .75em}
+legend{color:inherit;display:table;max-width:100%;padding:0;white-space:normal}textarea{overflow:auto}
+[type=checkbox],[type=radio]{padding:0}
+[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}
+[type=search]{-webkit-appearance:textfield;outline-offset:-2px}
+[type=search]::-webkit-search-decoration{-webkit-appearance:none}
+::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}
+/* End extract */
+html,body{font-family:Verdana,sans-serif;font-size:15px;line-height:1.5}html{overflow-x:hidden}
+h1{font-size:36px}h2{font-size:30px}h3{font-size:24px}h4{font-size:20px}h5{font-size:18px}h6{font-size:16px}
+.w3-container:after,.w3-container:before,.w3-panel:after,.w3-panel:before,.w3-row:after,.w3-row:before,.w3-row-padding:after,.w3-row-padding:before,
+.w3-top,.w3-bottom{position:fixed;width:100%;z-index:1}.w3-top{top:0}.w3-bottom{bottom:0}
+.w3-overlay{position:fixed;display:none;width:100%;height:100%;top:0;left:0;right:0;bottom:0;background-color:rgba(0,0,0,0.5);z-index:2}
+.w3-container,.w3-panel{padding:0.01em 16px}.w3-panel{margin-top:16px;margin-bottom:16px}
+.w3-spin{animation:w3-spin 2s infinite linear}@keyframes w3-spin{0%{transform:rotate(0deg)}100%{transform:rotate(359deg)}}
+.w3-animate-fading{animation:fading 2s}@keyframes fading{0%{opacity:0}100%{opacity:1}}
+.w3-animate-fading-blink{animation:fading 2s infinite}@keyframes fading{0%{opacity:0}50%{opacity:1}100%{opacity:0}}
+.w3-animate-opacity{animation:opac 0.8s}@keyframes opac{from{opacity:0} to{opacity:1}}
+.w3-animate-left{position:relative;animation:animateleft 0.6s}@keyframes animateleft{from{left:-1000px;opacity:0} to{left:0;opacity:1}}
+.w3-animate-right{position:relative;animation:animateright 0.6s}@keyframes animateright{from{right:-1000px;opacity:0} to{right:0;opacity:1}}
+.w3-animate-bottom{position:relative;animation:animatebottom 0.6s}@keyframes animatebottom{from{bottom:-1000px;opacity:0} to{bottom:0;opacity:1}}
+.w3-animate-top{position:relative;animation:animatetop 0.6s}@keyframes animatetop{from{top:-1000px;opacity:0} to{top:0;opacity:1}}
+.w3-animate-zoom {animation:animatezoom 0.6s}@keyframes animatezoom{from{transform:scale(0)} to{transform:scale(1)}}
+.w3-animate-input{transition:width 0.4s ease-in-out}.w3-animate-input:focus{width:100%!important}
+
+#swipecontainer {
+	font-family: 'Poppins', sans-serif;
+}
+
+#sp-main-body {
+	padding: 0 0 0 0 !important;
+}
+
+#sp-footer {
+	position: fixed !important; 
+	bottom: 0px; 
+	width:100%;
+}
+
+.pagepush {
+	height: calc(100vh - 100px) !important;
+}
+
+.biqr-frame-normal {
+	border-left: 15px solid #F6511D; 
+	border-right: 15px solid #00A6ED;
+}
+
+.properties code,
+.methods code,
+.events code {
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+.postcontainer {
+	padding-left:4%;
+	padding-right:4%;
+	text-align:center;
+}
+
+.swipearea
+{
+	height: calc(100vh - 100px) !important;
+	width: 100%;
+	text-align:center;
+	font-weight: 300;
+	font-size: 20px;
+	line-height: 36px;
+	opacity: 0;
+	position: absolute; 
+	left: 0px; 
+	top: 0px; 
+	z-index: 20;
+	display: block;
+	background-color:#CCCCCC;
+}
+
+
+
+#biqr-header {
+	position: relative;
+	z-index: 40;
+}
+
+.biqr-header-top-row {
+	width: 100%; 
+	display: table; 
+	padding: 7px 0px 4px 0px;
+	height: 35px;
+	color: #C8C8C8;
+	border-bottom:1px solid #C8C8C8; 	
+}
+
+#biqr-party-icon-wrap {
+	display:table-cell; 
+	width:24px; 
+	text-align:center;
+	font-size:18px;	
+}
+
+#biqr-party-name-wrap {
+	display:table-cell; 
+	text-align:left; 
+	padding-left:12px; 
+	color:#C8C8C8;
+}
+
+#biqr-party-ddl {
+	display:table-cell; 
+	text-align:left; 
+	padding-left:12px; 
+	color:#C8C8C8;
+}
+
+#biqr-party-fav-wrap {
+	display:table-cell; 
+	text-align:right; 
+	vertical-align:middle;
+	font-size:18px;	
+}
+
+.biqr-auth-row{
+	display:table;
+	width:100%;
+	padding:9px 0px 6px 0px;
+	height: 40px;
+}
+
+.biqr-auth{
+	display:table-cell;
+}
+
+.biqr-auth-name {
+	vertical-align:middle; 
+	display:inline-block;
+	color: #333333;
+	position:relative;
+	z-index:40;
+}
+
+.biqr-auth-fav{
+	display:table-cell;
+	text-align:right;
+	vertical-align:middle;
+	font-size: 18px;
+}
+
+#biqr-content {
+	width:92%;
+	margin-left:4%;
+	margin-right:4%
+}
+
+#biqr-center-area {
+	width:100%;
+}
+
+#biqr-post-area {
+	width: 100%;
+	padding-top:25px;
+	text-align:center;
+}
+
+#biqr-post {
+	font-family:'Fjalla One', sans-serif !important; 
+	line-height: 1.5; 
+	width:100%; 
+	text-align:center;
+	font-size:36px;
+}
+
+#biqr-comment-auth-fav-wrap {
+	position:relative;
+	z-index:40;
+}
+
+#biqr-comment-comment-area {
+	border-top:1px solid #C8C8C8; 
+}
+
+#biqr-comment-comment-list-area {
+	border-top:1px solid #C8C8C8; 
+}
+
+#biqr-comment-area {
+
+}
+
+.biqr-small-post {
+	font-weight:bold;
+	padding-bottom: 10px;
+}
+
+#biqr-comment-comment {
+	padding-bottom: 10px;
+}
+
+#biqr-comment-submit-text {
+	width: 100%; 
+	font-size: 1rem; 
+	line-height: 1.25; 
+	color: #495057; 
+	background-color: #fff; 
+	border: 1px solid rgba(0, 0, 0, 0.15); 
+	border-radius: 0.25rem; 
+	padding:5px; 
+	margin-bottom: 15px; 
+	height:30vh;
+}
+
+#biqr-footer-area {
+	width: 92%;
+	position: fixed; 
+	left: 4%;
+	bottom: 55px; 
+	z-index: 30;
+	font-size: 24px;
+}
+
+#biqr-footer {
+	margin-left:15px; 
+	margin-right: 15px;
+}
+
+.biqr-footer-icon {
+	color:#333333;
+	text-decoration:none;
+}
+
+.biqr-footer-comment-count {
+	text-align:right; 
+	font-size:15px; 
+	color:#C8C8C8;
+}
+
+#biqr-footer-button-area {
+	border-top:1px solid #C8C8C8; 
+	padding-top:5px;
+	width:100%;
+	display:table;
+}
+
+#biqr-footer-button-area a:link, #biqr-footer-button-area a:visited, #biqr-footer-button-area a:hover, #biqr-footer-button-area a:active,
+#biqr-party-name-wrap a:link, #biqr-party-name-wrap a:visited, #biqr-party-name-wrap a:hover, #biqr-party-name-wrap a:active,
+#biqr-post-auth-link a:link, #biqr-post-auth-link a:visited, #biqr-post-auth-link a:hover, #biqr-post-auth-link a:active,
+#biqr-comment-auth-link a:link, #biqr-comment-auth-link a:visited, #biqr-comment-auth-link a:hover, #biqr-comment-auth-link a:active {
+	color: #333333;
+	text-decoration: none;
+}
+
+.icon-grey {
+	color:#C8C8C8;
+}
+
+.icon-dark {
+	color:#333333;
+}
+
+.icon-d {
+	color:#F6511D;
+}
+
+.icon-a {
+	color:#00A6ED
+}
+
+.icon-avatar {
+	vertical-align:middle; 
+	font-size:24px; 
+	padding-right:9px;
+}
+
+.biqr-button-dark {
+	height: auto;
+	margin-bottom: 10px;
+	width: 100%;
+	border: none;
+	outline: 0;
+	text-transform: none;
+	box-shadow: none;
+	cursor: pointer;
+	transition: all 200ms ease;
+	border-radius:3px;
+	padding:11px 15px;
+	color:#ffffff;
+	font-size:15px;
+	background-color:#333333;
+	height:40px;
+}
+
+#biqr-chart-wrap {
+	width: 75%;
+	margin: auto;
+	padding-top: 50px;
+}
+
+.biqr-grid-table {
+	width:100%;
+	display:table;
+	padding-top: 30px;
+}
+
+.biqr-grid-row {
+	display: table-row;
+}
+
+.biqr-grid-cell-side {
+	display: table-cell;
+	border-bottom: 1px solid #c8c8c8;
+	width: 25px;
+	text-align: center;
+}
+
+.biqr-grid-cell-mid {
+	display: table-cell;
+	border-bottom: 1px solid #c8c8c8;
+	text-align: center;
+	width: 100%
+}
+
+.biqr-grid-deny {
+	font-weight: bold;
+	background-color: #F6511D;
+	color: #FFFFFF;
+}
+
+.biqr-grid-affirm {
+	font-weight: bold;
+	background-color: #00A6ED;
+	color: #FFFFFF;
+}
+
+.biqr-review-row {
+	font-size:15px;
+	border-bottom: 1px solid #C8C8C8;
+	width:100%;
+}
+
+.biqr-review-post {
+	display:table-cell;
+	vertical-align:middle;
+	padding-right:10px;
+	height:50px;
+}
+
+.biqr-review-post a {
+	color:#333333;
+	text-decoration:none;
+}
+
+.biqr-deny {
+	border-left: 10px solid #F6511D;
+	padding-left: 10px;
+}
+
+.biqr-affirm {
+	border-left: 10px solid #00A6ED;
+	padding-left: 10px;
+}
+
+.biqr-pass {
+	border-left: 10px solid #C8C8C8;
+	padding-left: 10px;
+}
+
+
+@media only screen and (min-width: 1000px) {
+	#biqr-post {
+		font-size: 60px;
+	}
+	
+	#biqr-chart-wrap {
+		width: 400px;;
+	}
+}
+		
+</style>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta http-equiv="x-ua-compatible" content="IE=9">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script type="text/javascript" src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+<script type="text/javascript" src="https://biqr.me/interstorm/jquery.touchSwipe.js"></script>
+<script type="text/javascript" src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+<div id="swipecontainer">
+
+<script>
+const apiURL = "https://biqr.me/data-service/v1";
+
+fetchPartyList();
+
+function fetchPartyList(){
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			dataAPI = this.responseText;
+			dataObj = JSON.parse(dataAPI);
+			document.getElementById("biqr-party-ddl-list").innerHTML = dataObj[0].PartyListHTML;
+		}
+	};
+
+	xhttp.open("GET", apiURL + "?method=get-party-list", true);
+	xhttp.send();
+}
+
+$(function() {			
+	$("#swipearea").swipe( {
+		swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
+			if (direction != null) {
+				swipe(direction);
+			}
+		},
+		threshold:0
+	});
+});
+
+
+function swipe(direction){
+	var locationElement = document.getElementById("biqr-val-location");
+	var location = locationElement.innerHTML;
+	var commentIcon = document.getElementById("biqr-footer-comment-icon");	
+	
+	if	(	//note where swipe is available
+			(location == "o") || (location == "p") ||
+			(location == "u" && direction != "down") || 
+			(location == "xc" && (direction == "left" || direction == "right" || direction == "up")) ||
+			(location == "c" && commentIcon.innerHTML.includes('fas fa-comment')) ||
+			(commentIcon.innerHTML.includes('slash') && (direction == "left" || direction == "right" || direction == "up"))
+		) 	{
+		
+				//when to reload post data
+				if 	(commentIcon.innerHTML.includes('fa-comment"')) { 	 
+					fetchPost(direction);
+				} 
+						
+				//when to reload comment data > only when in comments area
+				if	(commentIcon.innerHTML.includes('comments')) {
+						fetchComment(direction)
+				}
+				
+				//when to reload comment list > only when in comment list area
+				if	(commentIcon.innerHTML.includes('slash')) {
+						fetchCommentList(direction)
+				}
+								
+				//set current location 
+				location = locationElement.innerHTML;	//pull again in case fetch changed location
+				if (location == "o") {
+					locationElement.innerHTML = "c";
+				} else if (location == "p") {
+					locationElement.innerHTML = "c";
+				} else if (location == "c" && direction == "down") {
+					locationElement.innerHTML = "u";
+				} else if (location == "u" && direction == "up") {
+					locationElement.innerHTML = "c";
+				} 	//otherwise location is the same
+
+				setBiqrPage("swipe", locationElement.innerHTML);
+				document.getElementById("swipearea").style.display = 'none';	//disable swipe; needed for same direction swipe
+
+				//set class for animation
+				var biqrContent = document.getElementById("biqr-content");
+				if (direction == "up") {
+					biqrContent.classList.add("w3-animate-bottom");
+				} else if (direction == "down") {
+					biqrContent.classList.add("w3-animate-top");
+				} else if (direction == "left") {
+					biqrContent.classList.add("w3-animate-right");
+				} else if (direction == "right") {
+					biqrContent.classList.add("w3-animate-left");
+				} else {
+					biqrContent.className = "";
+				}
+				setTimeout(function(){ resetSwipe(); }, 1000);	//re-enable swipe
+			}
+}
+
+
+function resetSwipe() {
+	document.getElementById("biqr-content").className = "";
+	document.getElementById("swipearea").style.display = 'block';
+}
+
+		
+function fetchPost(direction) {
+	var partyLock = document.getElementById("biqr-party-icon");
+	var xhttp = new XMLHttpRequest();
+
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			dataAPI = this.responseText;
+			dataObj = JSON.parse(dataAPI);
+			
+			document.getElementById("biqr-party-name").innerHTML = dataObj[0].PartyName;
+			document.getElementById("biqr-party-fav").innerHTML = dataObj[0].PartyMemberHTML;
+			document.getElementById("biqr-val-party-public-id").innerHTML = dataObj[0].PartyPublicKey;
+			document.getElementById("biqr-val-post-public-id").innerHTML = dataObj[0].PostPublicID;
+			document.getElementById("biqr-post-auth-link").href = "member-view?u=" + dataObj[0].PostAuthor;
+			document.getElementById("biqr-post-auth-name").innerHTML = dataObj[0].PostAuthorHTML;
+			document.getElementById("biqr-post-auth-fav").innerHTML = dataObj[0].PostAuthorFollowStatusHTML;
+			document.getElementById("biqr-post").innerHTML = dataObj[0].PostText;
+			document.getElementById("biqr-footer-comment-count-post").innerHTML = dataObj[0].PostCommentCount + " total comments";
+			document.getElementById("biqr-chart-post").innerHTML = dataObj[0].ResponseDotHTML + " " + dataObj[0].PostText;
+			document.getElementById("biqr-fav-icon").innerHTML = dataObj[0].IsFollowedPostHTML;
+			
+			//set history as long as end not reached
+			var isEnd = dataObj[0].IsEndPost;
+			if (isEnd == 0) {
+				document.getElementById("biqr-val-hist").innerHTML = dataObj[0].HistVal;
+			}
+			
+			//update location if needed 
+			var location = dataObj[0].Location;
+			if (location == "xc" || location == "xu") {
+				document.getElementById("biqr-val-location").innerHTML = location;
+				//window.alert(document.getElementById("biqr-val-location").innerHTML);
+			}
+			
+			document.getElementById("biqr-grid-wrap").innerHTML = ""; //reset after each swipe
+			setChartValues(biqr, dataObj[0].PctAffirm, dataObj[0].PctDeny);
+		}
+	};
+
+	//get values
+	var location = document.getElementById("biqr-val-location").innerHTML;
+	var postPublicID = document.getElementById("biqr-val-post-public-id").innerHTML;
+	var partyLockVal = "0";	
+	var searchTerm = document.getElementById("biqr-val-search-term").innerHTML;
+	var hist = document.getElementById("biqr-val-hist").innerHTML;
+		
+	//if locked, make sure partyID is captured
+	if (!partyLock.innerHTML.includes("unlock")) {
+		partyLockVal = document.getElementById("biqr-val-party-public-id").innerHTML;
+	}
+
+	var URL = apiURL + "?method=post-next&location="+location+"&direction="+direction+"&postpublicid="+postPublicID+"&partypublicid="+partyLockVal+"&hist="+hist+"&search-term="+searchTerm;
+	xhttp.open("GET", URL, false);
+	xhttp.send();
+}
+
+function fetchComment(direction){
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			dataAPI = this.responseText;
+			dataObj = JSON.parse(dataAPI);
+			document.getElementById("biqr-comment-post").innerHTML = dataObj[0].PostText;
+			document.getElementById("biqr-val-comment-public-id").innerHTML = dataObj[0].CommentPublicID;
+			document.getElementById("biqr-comment-auth-link").href = "member-view?u=" + dataObj[0].CommentAuthor;
+			document.getElementById("biqr-comment-auth-name").innerHTML = dataObj[0].CommentAuthorHTML;
+			document.getElementById("biqr-comment-auth-fav").innerHTML = dataObj[0].CommentAuthorFollowStatusHTML;	
+			document.getElementById("biqr-comment-comment").innerHTML = dataObj[0].CommentText;
+			document.getElementById("biqr-footer-comment-count-comment").innerHTML = dataObj[0].PostCommentCount + " unreviewed comments";			
+		}
+	};
+
+	var URL = apiURL + "?method=comment-next&direction="+direction+"&postpublicid="+document.getElementById("biqr-val-post-public-id").innerHTML+"&commentpublicid="+document.getElementById("biqr-val-comment-public-id").innerHTML;
+	xhttp.open("GET", URL, false);
+	xhttp.send();
+}
+
+function fetchCommentList(direction){
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			dataAPI = this.responseText;
+			dataObj = JSON.parse(dataAPI);
+			document.getElementById("biqr-comment-post").innerHTML = dataObj[0].PostText;
+			document.getElementById("biqr-val-comment-public-id").innerHTML = dataObj[0].CommentPublicID;
+			document.getElementById("biqr-comment-auth-link").href = "member-view?u=" + dataObj[0].CommentAuthor;
+			document.getElementById("biqr-comment-auth-name").innerHTML = dataObj[0].CommentAuthorHTML;
+			document.getElementById("biqr-comment-auth-fav").innerHTML = dataObj[0].CommentAuthorFollowStatusHTML;	
+			document.getElementById("biqr-comment-comment").innerHTML = dataObj[0].CommentText;
+			document.getElementById("biqr-val-hist").innerHTML = dataObj[0].Page;
+			if (dataObj[0].PostCommentCount == 0) {
+				document.getElementById("biqr-footer-comment-count-comment").innerHTML = "End of " + dataObj[0].Page + " reviewed comments";
+			} else {
+				document.getElementById("biqr-footer-comment-count-comment").innerHTML = dataObj[0].Page + " of " + dataObj[0].PostCommentCount + " reviewed comments";
+			}
+		}
+	};
+	
+	var URL = apiURL + "?method=comment-list&direction="+direction+"&postpublicid="+document.getElementById("biqr-val-post-public-id").innerHTML+"&page="+document.getElementById("biqr-val-hist").innerHTML;
+	xhttp.open("GET", URL, false);
+	xhttp.send();
+}
+		
+function setBiqrPage(event, location) {
+	var postPublicID =  document.getElementById("biqr-val-post-public-id").innerHTML;
+	var partyRow = document.getElementById("biqr-party-row");
+	var sortRow = document.getElementById("biqr-comment-sort-row");	
+	var postArea = document.getElementById("biqr-post-area");
+	var chartArea = document.getElementById("biqr-chart-area");  
+	var chartButton = document.getElementById("biqr-footer-chart-button");  
+	var commentButton = document.getElementById("biqr-footer-comment-button");  
+	var commentSubmit = document.getElementById("biqr-submit-button");	
+	var commentArea = document.getElementById("biqr-comment-area");	
+	var commentCountPost = document.getElementById("biqr-footer-comment-count-post");
+	var commentCountComment = document.getElementById("biqr-footer-comment-count-comment");
+	var commentIcon = document.getElementById("biqr-footer-comment-icon");	
+	var footerArea = document.getElementById('biqr-footer-area').style.display;
+	
+	if (location != "X") {
+		if (footerArea == "none" && postPublicID != "0") {
+			//initial rendering of page
+			document.getElementById('biqr-footer-area').style.display = "block";
+			document.getElementById('biqr-party-row').style.display = "table";
+			document.getElementById('biqr-post-auth-row').style.display = "table";
+		}
+		
+		if (postPublicID == "0") {
+			//hide elements because they do not apply
+			document.getElementById('biqr-footer-area').style.display = "none";
+			document.getElementById('biqr-party-row').style.display = "none";
+			document.getElementById('biqr-post-auth-row').style.display = "none";
+		}
+		
+		//window.alert("event:"+event+"|location:"+location+"|postPublicID:"+postPublicID);
+		if (event == "swipe") {
+			//swipe occurred - determine if comment / chart / post
+			if ((commentIcon.innerHTML.includes("slash")) || (commentIcon.innerHTML.includes("comments"))) {
+				//in comment area -- do nothing
+			} else if (((location == "u") || (location == "xu")) && (postPublicID != "0")) {
+				//swipe in chart area
+				partyRow.style.display = "none";
+				postArea.style.display = "none";
+				chartArea.style.display = "block";
+				chartButton.style.display = "block";
+				commentArea.style.display = "none";
+				//commentCount.style.display = "none";
+			} else {
+				//swipe in post area or no history available
+				if (postPublicID == "0") {
+					partyRow.style.display = "none";
+					commentCountPost.style.display = "none";
+				} else {
+					partyRow.style.display = "table";
+					commentCountPost.style.display = "block";
+				}
+				postArea.style.display = "block";
+				chartArea.style.display = "none";
+				chartButton.style.display = "none";
+				commentArea.style.display = "none";
+				document.getElementById("biqr-val-hist").innerHTML = "1"; //reset history
+			}
+			
+		} else if (event == "comment") {
+			//footer comment icon selected
+			if (commentIcon.innerHTML.includes("slash")) {
+				//return from comments  
+				commentArea.style.display = "none";  
+				sortRow.style.display = "none";
+				commentButton.style.display = "none";
+				partyRow.style.display = "table";
+				commentIcon.innerHTML = "<i class='fas fa-comment'></i>";
+				toggleAddComments("comments");
+				toggleChart("comments");
+				commentCountComment.style.display = "none";
+				commentCountPost.style.display = "block";					
+				
+				if ((document.getElementById("biqr-val-location").innerHTML == "u") || (document.getElementById("biqr-val-location").innerHTML == "xu")) {
+					//go back to chart 
+					partyRow.style.display = "none";
+					chartArea.style.display = "block";
+					chartButton.style.display = "block";			
+				} else {
+					//go back to post 
+					partyRow.style.display = "table";
+					postArea.style.display = "block";
+				}
+			} else if (commentIcon.innerHTML.includes("comments")) {
+				//go to comment review (already swiped)
+				document.getElementById("biqr-val-hist").innerHTML = "0"; //reset history
+				fetchCommentList();
+				commentIcon.innerHTML = "<i class='fas fa-comment-slash'></i>";	
+				commentButton.style.display = "none";
+			} else {
+				fetchComment();
+				//go to comments
+				postArea.style.display = "none";
+				commentArea.style.display = "block";
+				chartArea.style.display = "none";
+				chartButton.style.display = "none";
+				sortRow.style.display = "table";
+				partyRow.style.display = "none";
+				commentCountPost.style.display = "none";
+				commentCountComment.style.display = "block";
+				commentButton.style.display = "block";
+				commentIcon.innerHTML = "<i class='fas fa-comments'></i>";
+			}		
+		} else {
+			//leave - probably for chart
+		}
+	} else {
+		//no available posts
+		document.getElementById('biqr-footer-area').style.display = "none";
+		document.getElementById('biqr-post-auth-row').style.display = "none";
+	}
+	
+	toggleChart("swipe");	//reset chart 
+}
+
+function toggleAddComments(view) {
+	var swipeArea = document.getElementById("swipearea");
+	var commentButton = document.getElementById("biqr-comments-button");
+	var commentArea = document.getElementById("biqr-comment-comment-area");
+	var commentInput = document.getElementById("biqr-comment-submit-area");
+	var commentSubmit = document.getElementById("biqr-footer-submit-button");	
+	
+	if ((commentButton.innerHTML == "Add Comments") && (view == "")) {
+		swipeArea.style.display = "none";
+		commentArea.style.display = "none";
+		commentInput.style.display = "block";
+		commentSubmit.style.display = "block";
+		commentButton.innerHTML = "Cancel";
+	} else {
+		document.getElementById("biqr-comment-submit-text").value = "";
+		swipeArea.style.display = "block";
+		commentArea.style.display = "block";
+		commentInput.style.display = "none";
+		commentSubmit.style.display = "none";
+		commentButton.innerHTML = "Add Comments";
+	}
+}
+
+function submitComment() {
+	var commentText = document.getElementById("biqr-comment-submit-text").value;
+	var xhttp = new XMLHttpRequest();
+	var URL = apiURL + "?method=comment-submit&postpublicid="+encodeURI(document.getElementById("biqr-val-post-public-id").innerHTML)+"&content="+encodeURI(commentText);
+	xhttp.open("POST", URL, false);
+	xhttp.send();
+	fetchCommentList("");
+	toggleAddComments("");	
+	setBiqrPage("comment","");
+}
+
+function togglePartyLock() {
+	var partyLock = document.getElementById("biqr-party-icon");
+	var partyPublicID = document.getElementById("biqr-val-post-public-id").innerHTML;
+	
+	if (partyLock.innerHTML.includes("unlock")) {
+		partyLock.innerHTML = "<i class='fas fa-lock icon-grey'></i>";
+	} else {
+		document.getElementById("biqr-party-ddl").style.display = "none";
+		partyLock.innerHTML = "<i class='fas fa-unlock icon-grey'></i>";
+		document.getElementById("biqr-party-name-wrap").style.display = "table-cell";
+		document.getElementById("biqr-party-ddl-list").selectedIndex = "0"; 
+		if (partyPublicID.length < 5) {
+			document.getElementById("biqr-val-location").innerHTML = "p";
+			swipe("down");
+		}
+	}
+}
+
+function toggleDDL(){
+	document.getElementById("biqr-party-name-wrap").style.display = "none";
+	document.getElementById("biqr-party-ddl").style.display = "table-cell";
+	togglePartyLock();
+}
+
+function partySelect() {
+	document.getElementById("biqr-val-location").innerHTML = "p";
+	document.getElementById("biqr-val-party-public-id").innerHTML = document.getElementById("biqr-party-ddl-list").value;
+	swipe("down");
+}
+
+function togglePartyFav() {
+	var partyFav = document.getElementById("biqr-party-fav");
+	if (partyFav.innerHTML.includes("icon-grey")) {
+		//not selected > make followed
+		partyFav.innerHTML = "<i class='fas fa-plus-circle icon-a'></i>";
+	} else if (partyFav.innerHTML.includes("fa-plus-circle icon-a")) {
+		//followed > make favorite
+		partyFav.innerHTML = "<i class='fas fa-chevron-circle-up icon-a'></i>";
+	} else if (partyFav.innerHTML.includes("fa-chevron-circle-up")) {
+		//favorite > make foe
+		partyFav.innerHTML = "<i class='fas fa-times-circle icon-d'></i>";
+	} else {
+		//foe > make unselected
+		partyFav.innerHTML = "<i class='fas fa-plus-circle icon-grey'></i>";
+	}
+		
+	var xhttp = new XMLHttpRequest();
+	var URL = apiURL + "?method=favorite-tag&tag-type=party&publicid="+encodeURI(document.getElementById("biqr-val-party-public-id").innerHTML);
+	xhttp.open("POST", URL, true);
+	xhttp.send();
+
+}
+
+function toggleAuthFav(xObj) {
+	var x = document.getElementById(xObj);
+	if (x.innerHTML.includes("icon-grey")) {
+		//not selected > make favorite
+		x.innerHTML = "<i class='fas fa-chevron-circle-up icon-a'></i>";
+	} else if (x.innerHTML.includes("icon-a")) {
+		//favorite > make foe
+		x.innerHTML = "<i class='fas fa-times-circle icon-d'></i>";
+	} else {
+		//foe > make unselected
+		x.innerHTML = "<i class='fas fa-chevron-circle-up icon-grey'></i>";
+	}
+	
+	var URL = apiURL + "?method=favorite-tag&tag-type";
+	if (xObj == "biqr-post-auth-fav") {
+		URL = URL + "=post-author&publicid=" + encodeURI(document.getElementById("biqr-val-post-public-id").innerHTML);
+	} else {
+		URL = URL + "=comment-author&publicid=" + encodeURI(document.getElementById("biqr-val-comment-public-id").innerHTML);
+	}
+	
+	var xhttp = new XMLHttpRequest();
+	xhttp.open("POST", URL, true);
+	xhttp.send();
+}
+
+function togglePostFav() {
+	var postFav = document.getElementById("biqr-fav-icon");
+	if (postFav.innerHTML.includes("icon-d")) {
+		postFav.innerHTML = "<i class='fas fa-heart'></i>";
+	} else {
+		postFav.innerHTML = "<i class='fas fa-heart icon-d'></i>";
+	}
+
+	var xhttp = new XMLHttpRequest();
+	var URL = apiURL + "?method=favorite-tag&tag-type=post&publicid="+encodeURI(document.getElementById("biqr-val-post-public-id").innerHTML);
+	xhttp.open("POST", URL, true);
+	xhttp.send();
+}
+
+function toggleChart(view) {
+	var commentButton = document.getElementById("biqr-chart-button");
+	var chartGraph = document.getElementById("biqr-chart-wrap");
+	var chartGrid = document.getElementById("biqr-grid-wrap");
+	
+	if ((commentButton.innerHTML == "Member Impressions") && (view == "")) {
+		if (chartGrid.innerHTML == "") {
+			buildChartGrid();
+		}
+		commentButton.innerHTML = "Impression Summary";
+		chartGraph.style.display = "none";
+		chartGrid.style.display = "block";
+	} else {
+		commentButton.innerHTML = "Member Impressions";
+		chartGraph.style.display = "block";
+		chartGrid.style.display = "none";
+	}
+}
+
+function buildChartGrid() {
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			dataAPI = this.responseText;
+			dataObj = JSON.parse(dataAPI);
+			var dataObjLen = dataObj.length;
+			document.getElementById("biqr-grid-wrap").innerHTML = dataObj[0].HTML;
+		}
+	};
+
+	var URL = apiURL + "?method=post-impression-detail&postpublicid="+document.getElementById("biqr-val-post-public-id").innerHTML;
+	xhttp.open("GET", URL, false);
+	xhttp.send();
+}
+
+</script>
+
+	<div class='pagepush biqr-frame-normal'>
+				
+		<div id='biqr-content'>
+			<div id='biqr-header'>
+			
+				<div id='biqr-party-row' class='biqr-header-top-row' style='display:none;'>
+					<div id='biqr-party-icon-wrap'>
+						<a href='javascript:togglePartyLock();'>
+							<div id='biqr-party-icon'>
+								<i class='fas fa-unlock icon-grey'></i>
+							</div>
+						</a>
+					</div>
+					<div id='biqr-party-name-wrap'>
+						<a href='javascript:toggleDDL();'>
+							<div id='biqr-party-name'></div>
+						</a>
+					</div>
+					<div id='biqr-party-ddl' style='display:none;'>
+						<select name='biqr-party-ddl-list' id='biqr-party-ddl-list' style='width: 250px; border:none; background-color:transparent; color:#C8C8C8; height:24px; padding:0px 0px 0px 8px;' onchange='partySelect()'>
+							<option value='0'>BIQR General</option>
+						</select>
+					</div>
+					<div id='biqr-party-fav-wrap'>
+						<a href='javascript:togglePartyFav();'>
+							<div id='biqr-party-fav'>
+								<i class='fas fa-plus-circle icon-grey'></i>
+							</div>
+						</a>
+					</div>
+				</div>
+				
+				<div id='biqr-comment-sort-row' class='biqr-header-top-row' style='display:none;'>
+					Sort comments by:
+				</div>
+				
+				<div id='biqr-post-auth-row' class='biqr-auth-row' style='display:none;'>
+					<div id='biqr-post-auth' class='biqr-auth'>
+						<a id='biqr-post-auth-link' href='member-view'>
+							<div id='biqr-post-auth-name' class='biqr-auth-name'></div>
+						</a>
+					</div>
+					<div id='biqr-post-auth-fav-wrap' class='biqr-auth-fav'>
+						<a href='javascript:toggleAuthFav("biqr-post-auth-fav");'>
+							<div id='biqr-post-auth-fav'>
+								<i class='fas fa-chevron-circle-up icon-grey'></i>
+							</div>
+						</a>
+					</div>
+				</div>
+				
+			</div>
+			
+			<div id='biqr-center-area'>
+				<div id='biqr-post-area' style='display:block;'>
+					<div id='biqr-post'>
+						
+					</div>
+				</div>
+				
+				<div id='biqr-comment-area' style='display:none;'>
+					<div id='biqr-comment-post' class='biqr-small-post'>
+						Comment text goes here
+					</div>
+				
+					<div id='biqr-comment-comment-area'>
+						<div id='biqr-comment-auth-row' class='biqr-auth-row'>
+							<div id='biqr-comment-auth' class='biqr-auth'>
+								<a id='biqr-comment-auth-link' href='member-view'>
+									<div id='biqr-comment-auth-name' class='biqr-auth-name'></div>
+								</a>
+							</div>
+							<div id='biqr-comment-auth-fav-wrap' class='biqr-auth-fav'>
+								<a href='javascript:toggleAuthFav("biqr-comment-auth-fav");'>
+									<div id='biqr-comment-auth-fav'>
+										<i class='fas fa-chevron-circle-up icon-grey'></i>
+									</div>
+								</a>
+							</div>
+						</div>
+						<div id='biqr-comment-comment'>
+							Comment responses go here
+						</div>
+					</div>
+						
+					<div id='biqr-comment-submit-area' style='display:none;'>
+						<textarea id='biqr-comment-submit-text' placeholder='Enter comment text (max 500 characters)' maxlength='500'></textarea>
+					</div>
+				</div>
+
+				<div id='biqr-chart-area' style='display:none;'>
+					<div id='biqr-chart-post' class='biqr-small-post'>
+						Post text goes here
+					</div>
+					<div id='biqr-chart-wrap' style='display:none;'>
+						<canvas id='pie-chart'></canvas>
+					</div>
+					<div id='biqr-grid-wrap' style='display:none;'></div>
+				</div>
+			</div>
+			
+		</div>
+	
+		<div id="swipearea" class="swipearea"></div>
+	</div>
+	
+	<div id='biqr-footer-area' style='display:none'>
+		<div id='biqr-footer'>
+			<div id='biqr-footer-submit-button' style='display:none;'>
+				<button id='biqr-submit-button' type='button' onclick='submitComment()' class='biqr-button-dark'>Submit Comment</button>
+			</div>
+			<div id='biqr-footer-comment-button' style='display:none;'>
+				<button id='biqr-comments-button' type='button' onclick='toggleAddComments("")' class='biqr-button-dark'>Add Comments</button>
+			</div>
+			<div id='biqr-footer-chart-button' style='display:none;'>
+				<button id='biqr-chart-button' type='button' onclick='toggleChart("")' class='biqr-button-dark'>Member Impressions</button>
+			</div>			
+			<div id='biqr-footer-comment-count-post' class='biqr-footer-comment-count'></div>
+			<div id='biqr-footer-comment-count-comment' class='biqr-footer-comment-count' style='display:none;'></div>
+			<div id='biqr-footer-button-area'>
+				<div style='display:table-cell; text-align:left; width:20%;'>
+					<a href='javascript:togglePostFav();'>
+						<div id='biqr-fav-icon'>
+							<i class='fas fa-heart'></i>
+						</div>
+					</a>
+				</div><div style='display:table-cell; text-align:center; width:30%;'>
+					<i class='fas fa-bell'></i>
+				</div>
+				<div style='display:table-cell; text-align:center; width:30%;'>
+					<i class='fas fa-share-alt'></i>
+				</div>
+				<div style='display:table-cell; text-align:right; width:20%;'>
+					<a href='javascript:setBiqrPage("comment","");'>
+						<div id='biqr-footer-comment-icon'>
+							<i class='fas fa-comment'></i>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>	
+<div id='biqr-val-location' style="display:none;">o</div>	
+<div id='biqr-val-party-public-id' style="display:none;">0</div>	
+<div id='biqr-val-post-public-id' style="display:none;">0</div>	
+<div id='biqr-val-comment-public-id' style="display:none;">0</div>	
+<div id='biqr-val-hist' style="display:none;">0</div>	
+<div id='biqr-val-search-term' style="display:none;"><?php echo htmlspecialchars($_REQUEST['search-term']);?></div>
+
+<script>
+Chart.defaults.global.legend.labels.usePointStyle = true;
+var biqr = new Chart(document.getElementById("pie-chart"), {
+    type: 'pie',
+    data: {
+		labels: ["Deny", "Affirm"],
+		datasets: [{
+			label: "Population (millions)",
+			backgroundColor: ["#F6511D", "#00A6ED"],
+			data: [50,50]
+			}]
+		},
+		options: {
+			events: [],
+			animation: {
+				duration: 0
+			},
+			elements: {
+				arc: {
+					borderWidth: 2,
+					borderColor:'#FFF'
+				}
+			},
+			legend: {
+				display: true,
+				position: 'bottom',
+				labels: {
+					boxWidth: 3,
+					fontColor: "#333333",
+				}
+			}
+		}
+	}
+);
+
+function setChartValues(chart, affirm, deny){
+	chart.data.datasets[0].data[0] = deny;
+	chart.data.datasets[0].data[1] = affirm;
+	if (affirm == 0 || deny == 0) {
+		chart.data.datasets[0].borderWidth = 0;
+	} else {
+		chart.data.datasets[0].borderWidth = 2;
+	}
+    chart.update();
+}
+</script>
+
+<?php 
+if (strlen(htmlspecialchars($_REQUEST['i'])) > 1) {
+	echo "
+	<script>
+		document.getElementById('biqr-val-post-public-id').innerHTML = '%%%-" . htmlspecialchars($_REQUEST['i']) . "';
+		swipe('down');
+	</script> ";
+} else {
+	echo "
+	<script>
+		document.getElementById('biqr-post').innerHTML = \"<div style='padding-top:150px'>Swipe anywhere to begin</div>\";
+	</script> ";
+}
+?>
+
+

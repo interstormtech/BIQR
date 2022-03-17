@@ -1,0 +1,576 @@
+<style>
+.biqr-button {
+	height: auto;
+	margin: 10px 0px 10px 0px;
+	line-height: normal;
+	width:100%;
+	border: none;
+	outline: 0;
+	text-transform: none;
+	box-shadow: none;
+	cursor: pointer;
+	transition: all 200ms ease;
+	border-radius:3px;
+	color:#ffffff;
+	font-size:15px;
+	height:40px;
+	display:inline-block;
+}
+
+.button-on {
+	background-color:#333333;
+}
+
+.button-off {
+	background-color:#C8C8C8;
+}
+
+h4 {
+	display:inline-block;
+	padding-top: 8px;
+}
+
+.biqr-activity-area {
+	display:inline-block;
+	width:100%;
+}
+
+.biqr-activity-input {
+	padding:0 10px 0 10px;
+	width:100%;
+	height:40px;
+}
+
+.biqr-activity-button-left {
+	display:inline-block;
+	width:31%;
+	float:left;
+}
+
+.biqr-activity-button-middle {
+	display:inline-block;
+	width:31%;
+}
+
+.biqr-activity-button-right {
+	display:inline-block;
+	width:31%;
+	float:right;
+}
+
+.biqr-activity-frame {
+	width:100%;
+	border:none;
+	background-color:#FFFFFF;
+	display:block;
+	overflow:hidden;
+}
+
+.biqr-pager-outside {
+	display:table-cell;
+	font-size:24px;
+}
+
+.biqr-pager-inside {
+	display:table-cell;
+	font-size:24px;
+	margin:0px 15px 0px 15px;
+	vertical-align: middle;
+	width:40px;
+}
+
+.biqr-pager-area {
+	width:100%;
+	text-align:center;
+	display:table;
+}
+
+.biqr-pager-detail{
+	display:table-cell;
+	font-size:15px;
+	font-weight: bold;
+	margin:0px 15px 0px 15px;
+	vertical-align: middle;
+	width:25px;
+}
+
+.biqr-review-row {
+	font-size:16px;
+	border-bottom: 1px solid #C8C8C8;
+	width:100%;
+}
+
+.biqr-review-post {
+	display:table-cell;
+	vertical-align:middle;
+	padding-right:10px;
+}
+
+.biqr-review-post a {
+	color:#333333;
+	text-decoration:none;
+}
+
+.biqr-review-highlight{
+	display:inline-block;
+	vertical-align:middle;
+	position:relative;
+	z-index:-1;
+	width:18%;
+	text-align:right;
+	padding-right:10px;
+}
+
+.biqr-review-chart{
+	display:table-cell;
+	vertical-align:middle;
+	position:relative;
+	z-index:-1;
+	text-align:right;
+	width:45px;
+}
+
+.biqr-chart-wrap {
+	height:35px;
+	width:35px;
+}
+
+.biqr-deny {
+	border-left: 10px solid #F6511D;
+	padding-left: 10px;
+}
+
+.biqr-affirm {
+	border-left: 10px solid #00A6ED;
+	padding-left: 10px;
+}
+
+.biqr-pass {
+	border-left: 10px solid #C8C8C8;
+	padding-left: 10px;
+}
+
+
+h4 {
+	font-family: 'Fjalla One', sans-serif !important;
+	display:inline-block;
+	padding-top: 8px;
+}
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<div style='padding:0px 10px 0px 10px;'>
+	<div>
+		<h4>
+			Posts, Favorites and Replies
+		</h4>
+	</div>
+	<div class='biqr-activity-area'>
+		<div>
+			<input type='text' id='biqr-post-search' name='biqr-post-search' placeholder='Enter term and select type' class='biqr-activity-input' maxlength="25" onblur='refreshList();'>
+		</div>
+		<div style='text-align:center;'>
+			<div class='biqr-activity-button-left'>
+				<button id='biqr-button-posts' type='button' onclick='runSearch(this);' class='biqr-button button-on'>Posts</button>
+			</div>
+			<div class='biqr-activity-button-middle'>
+				<button id='biqr-button-favorites' type='button' onclick='runSearch(this);' class='biqr-button button-off'>Favorites</button>
+			</div>
+			<div class='biqr-activity-button-right'>
+				<button id='biqr-button-replies' type='button' onclick='runSearch(this);' class='biqr-button button-off'>Replies</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div style='padding-bottom:2px; border-top:1px solid #C8C8C8;'>
+
+	<div id='biqr-row-0' class='biqr-review-row' style='min-height:55px;display:none;'>
+		<div class='biqr-review-post'>
+			<a id='biqr-post-0' href='dashboard'></a>
+		</div>
+		<div class='biqr-review-chart'>
+			<div class='biqr-chart-wrap'>
+				<canvas id='biqr-chart-0'></canvas>
+			</div>
+		</div>
+	</div>
+
+	<div id='biqr-row-1' class='biqr-review-row' style='min-height:55px;display:none;'>
+		<div class='biqr-review-post'>
+			<a id='biqr-post-1' href='dashboard'></a>
+		</div>
+		<div class='biqr-review-chart'>
+			<div class='biqr-chart-wrap'>
+				<canvas id='biqr-chart-1'></canvas>
+			</div>
+		</div>
+	</div>
+
+	<div id='biqr-row-2' class='biqr-review-row' style='min-height:55px;display:none;'>
+		<div class='biqr-review-post'>
+			<a id='biqr-post-2' href='dashboard'></a>
+		</div>
+		<div class='biqr-review-chart'>
+			<div class='biqr-chart-wrap'>
+				<canvas id='biqr-chart-2'></canvas>
+			</div>
+		</div>
+	</div>
+
+	<div id='biqr-row-3' class='biqr-review-row' style='min-height:55px;display:none;'>
+		<div class='biqr-review-post'>
+			<a id='biqr-post-3' href='dashboard'></a>
+		</div>
+		<div class='biqr-review-chart'>
+			<div class='biqr-chart-wrap'>
+				<canvas id='biqr-chart-3'></canvas>
+			</div>
+		</div>
+	</div>
+
+	<div id='biqr-row-4' class='biqr-review-row' style='min-height:55px;display:none;'>
+		<div class='biqr-review-post'>
+			<a id='biqr-post-4' href='dashboard'></a>
+		</div>
+		<div class='biqr-review-chart'>
+			<div class='biqr-chart-wrap'>
+				<canvas id='biqr-chart-4'></canvas>
+			</div>
+		</div>
+	</div>
+
+	<div id='biqr-row-5' class='biqr-review-row' style='min-height:55px;display:none;'>
+		<div class='biqr-review-post'>
+			<a id='biqr-post-5' href='dashboard'></a>
+		</div>
+		<div class='biqr-review-chart'>
+			<div class='biqr-chart-wrap'>
+				<canvas id='biqr-chart-5'></canvas>
+			</div>
+		</div>
+	</div>
+
+	<div id='biqr-row-6' class='biqr-review-row' style='min-height:55px;display:none;'>
+		<div class='biqr-review-post'>
+			<a id='biqr-post-6' href='dashboard'></a>
+		</div>
+		<div class='biqr-review-chart'>
+			<div class='biqr-chart-wrap'>
+				<canvas id='biqr-chart-6'></canvas>
+			</div>
+		</div>
+	</div>
+
+	<div id='biqr-row-7' class='biqr-review-row' style='min-height:55px;display:none;'>
+		<div class='biqr-review-post'>
+			<a id='biqr-post-7' href='dashboard'></a>
+		</div>
+		<div class='biqr-review-chart'>
+			<div class='biqr-chart-wrap'>
+				<canvas id='biqr-chart-7'></canvas>
+			</div>
+		</div>
+	</div>
+
+	<div id='biqr-row-8' class='biqr-review-row' style='min-height:55px;display:none;'>
+		<div class='biqr-review-post'>
+			<a id='biqr-post-8' href='dashboard'></a>
+		</div>
+		<div class='biqr-review-chart'>
+			<div class='biqr-chart-wrap'>
+				<canvas id='biqr-chart-8'></canvas>
+			</div>
+		</div>
+	</div>
+
+	<div id='biqr-row-9' class='biqr-review-row' style='min-height:55px;display:none;'>
+		<div class='biqr-review-post'>
+			<a id='biqr-post-9' href='dashboard'></a>
+		</div>
+		<div class='biqr-review-chart'>
+			<div class='biqr-chart-wrap'>
+				<canvas id='biqr-chart-9'></canvas>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<div class='biqr-pager-area'>
+	<div class='biqr-pager-outside' style='text-align:right;'><a href='javascript:pageStart();' style='color:#333333;'><i class='fas fa-angle-double-left'></i></a></div>
+	<div class='biqr-pager-inside'><a href='javascript:pageBack();' style='color:#333333;'><i class='fas fa-angle-left'></i></a></div>
+	<div id='biqr-pager-number' class='biqr-pager-detail'>1</div>
+	<div class='biqr-pager-detail'> of </div>
+	<div id='biqr-pager-max' class='biqr-pager-detail'>1</div>
+	<div class='biqr-pager-inside'><a href='javascript:pageNext();' style='color:#333333;'><i class='fas fa-angle-right'></i></a></div>
+	<div class='biqr-pager-outside' style='text-align:left;'><a href='javascript:pageEnd();' style='color:#333333;'><i class='fas fa-angle-double-right'></i></a></div>
+</div>
+
+<script>
+const apiURL = "https://biqr.me/data-service/v1";
+
+Chart.defaults.global.legend.labels.usePointStyle = true;
+
+var biqr0 = new Chart(document.getElementById("biqr-chart-0"), {
+type: 'pie',
+data: {
+labels: ["Deny", "Affirm"],
+datasets: [{backgroundColor: ["#F6511D", "#00A6ED"],data: [50,50]}]
+},
+options: {
+events: [], animation: {duration: 0},
+elements: { arc: {borderWidth: 2, borderColor:'#FFF'} },
+legend: {display: false, }
+}
+}
+);
+
+var biqr1 = new Chart(document.getElementById("biqr-chart-1"), {
+type: 'pie',
+data: {
+labels: ["Deny", "Affirm"],
+datasets: [{backgroundColor: ["#F6511D", "#00A6ED"],data: [50,50]}]
+},
+options: {
+events: [], animation: {duration: 0},
+elements: { arc: {borderWidth: 2, borderColor:'#FFF'} },
+legend: {display: false, }
+}
+}
+);
+
+var biqr2 = new Chart(document.getElementById("biqr-chart-2"), {
+type: 'pie',
+data: {
+labels: ["Deny", "Affirm"],
+datasets: [{backgroundColor: ["#F6511D", "#00A6ED"],data: [50,50]}]
+},
+options: {
+events: [], animation: {duration: 0},
+elements: { arc: {borderWidth: 2, borderColor:'#FFF'} },
+legend: {display: false, }
+}
+}
+);
+
+var biqr3 = new Chart(document.getElementById("biqr-chart-3"), {
+type: 'pie',
+data: {
+labels: ["Deny", "Affirm"],
+datasets: [{backgroundColor: ["#F6511D", "#00A6ED"],data: [50,50]}]
+},
+options: {
+events: [], animation: {duration: 0},
+elements: { arc: {borderWidth: 2, borderColor:'#FFF'} },
+legend: {display: false, }
+}
+}
+);
+
+var biqr4 = new Chart(document.getElementById("biqr-chart-4"), {
+type: 'pie',
+data: {
+labels: ["Deny", "Affirm"],
+datasets: [{backgroundColor: ["#F6511D", "#00A6ED"],data: [50,50]}]
+},
+options: {
+events: [], animation: {duration: 0},
+elements: { arc: {borderWidth: 2, borderColor:'#FFF'} },
+legend: {display: false, }
+}
+}
+);
+
+var biqr5 = new Chart(document.getElementById("biqr-chart-5"), {
+type: 'pie',
+data: {
+labels: ["Deny", "Affirm"],
+datasets: [{backgroundColor: ["#F6511D", "#00A6ED"],data: [50,50]}]
+},
+options: {
+events: [], animation: {duration: 0},
+elements: { arc: {borderWidth: 2, borderColor:'#FFF'} },
+legend: {display: false, }
+}
+}
+);
+
+var biqr6 = new Chart(document.getElementById("biqr-chart-6"), {
+type: 'pie',
+data: {
+labels: ["Deny", "Affirm"],
+datasets: [{backgroundColor: ["#F6511D", "#00A6ED"],data: [50,50]}]
+},
+options: {
+events: [], animation: {duration: 0},
+elements: { arc: {borderWidth: 2, borderColor:'#FFF'} },
+legend: {display: false, }
+}
+}
+);
+
+var biqr7 = new Chart(document.getElementById("biqr-chart-7"), {
+type: 'pie',
+data: {
+labels: ["Deny", "Affirm"],
+datasets: [{backgroundColor: ["#F6511D", "#00A6ED"],data: [50,50]}]
+},
+options: {
+events: [], animation: {duration: 0},
+elements: { arc: {borderWidth: 2, borderColor:'#FFF'} },
+legend: {display: false, }
+}
+}
+);
+
+var biqr8 = new Chart(document.getElementById("biqr-chart-8"), {
+type: 'pie',
+data: {
+labels: ["Deny", "Affirm"],
+datasets: [{backgroundColor: ["#F6511D", "#00A6ED"],data: [50,50]}]
+},
+options: {
+events: [], animation: {duration: 0},
+elements: { arc: {borderWidth: 2, borderColor:'#FFF'} },
+legend: {display: false, }
+}
+}
+);
+
+var biqr9 = new Chart(document.getElementById("biqr-chart-9"), {
+type: 'pie',
+data: {
+labels: ["Deny", "Affirm"],
+datasets: [{backgroundColor: ["#F6511D", "#00A6ED"],data: [50,50]}]
+},
+options: {
+events: [], animation: {duration: 0},
+elements: { arc: {borderWidth: 2, borderColor:'#FFF'} },
+legend: {display: false, }
+}
+}
+);
+
+function resetGrid(){
+for (var i = 0; i < 10; i++) {
+document.getElementById("biqr-row-" + i.toString()).classList.remove("biqr-affirm");
+document.getElementById("biqr-row-" + i.toString()).classList.remove("biqr-deny");
+document.getElementById("biqr-post-" + i.toString()).innerHTML = "";
+document.getElementById("biqr-row-" + i.toString()).style.display = 'none';
+}
+}
+
+function fetchImpression(){
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+if (this.readyState == 4 && this.status == 200) {
+dataAPI = this.responseText;
+dataObj = JSON.parse(dataAPI);
+
+resetGrid();
+if (dataObj.length === 0) {
+document.getElementById("biqr-pager-max").innerHTML = 1;
+} else {
+document.getElementById("biqr-pager-max").innerHTML = dataObj[0].PostTotalCount;
+}
+
+for (var i = 0; i < dataObj.length; i++) {
+document.getElementById("biqr-post-" + i.toString()).href = "swipe?i=" + dataObj[i].PostPublicID;
+document.getElementById("biqr-post-" + i.toString()).innerHTML = dataObj[i].PostTextFull;
+setChartValues(eval("biqr"+i.toString()), dataObj[i].PctDeny, dataObj[i].PctAffirm);
+if (dataObj[i].PostResponseValue == -1) {
+document.getElementById("biqr-row-" + i.toString()).classList.add("biqr-deny");
+} else if (dataObj[i].PostResponseValue == 1) {
+document.getElementById("biqr-row-" + i.toString()).classList.add("biqr-affirm");
+} else {
+document.getElementById("biqr-row-" + i.toString()).classList.add("biqr-pass");
+}
+document.getElementById("biqr-row-" + i.toString()).style.display = 'table';
+}
+}
+};
+
+var t = "";
+bpost = document.getElementById("biqr-button-posts");
+bfavr = document.getElementById("biqr-button-favorites");
+brply = document.getElementById("biqr-button-replies");
+
+if (bpost.classList.contains("button-on")) {
+t = t + "p";
+}
+if (bfavr.classList.contains("button-on")) {
+t = t + "f";
+}
+if (brply.classList.contains("button-on")) {
+t = t + "y";
+}
+if (t == "") {
+t = "x";
+}
+
+var s = document.getElementById("biqr-post-search").value;
+var p = parseInt(document.getElementById("biqr-pager-number").innerHTML);
+var URL = apiURL + "?method=user-impression&search-type="+t+"&page="+p+"&search-term="+s;
+//window.alert(URL);
+xhttp.open("GET", URL, false);
+xhttp.send();
+}
+
+function setChartValues(chart, deny, affirm){
+chart.data.datasets[0].data[0] = deny;
+chart.data.datasets[0].data[1] = affirm;
+if (affirm == 0 || deny == 0) {
+chart.data.datasets[0].borderWidth = 0;
+} else {
+chart.data.datasets[0].borderWidth = 2;
+}
+chart.update();
+}
+
+function runSearch(x) {
+var s = document.getElementById("biqr-post-search").value;
+var element = document.getElementById(x.id);
+element.classList.toggle("button-off");
+element.classList.toggle("button-on");
+document.getElementById("biqr-pager-number").innerHTML = 1;
+fetchImpression();
+}
+
+function pageStart(){
+var page = document.getElementById("biqr-pager-number");
+page.innerHTML = 1;
+fetchImpression();
+}
+
+function pageBack(){
+var page = document.getElementById("biqr-pager-number");
+pageNo = parseInt(page.innerHTML) - 1;
+if (pageNo > 1) {
+page.innerHTML = pageNo;
+} else {
+page.innerHTML = 1;
+}
+fetchImpression();
+}
+
+function pageNext(){
+var page = document.getElementById("biqr-pager-number");
+pageNo = parseInt(page.innerHTML) + 1;
+if (pageNo < parseInt(document.getElementById("biqr-pager-max").innerHTML)) {
+page.innerHTML = pageNo;
+} else {
+page.innerHTML = parseInt(document.getElementById("biqr-pager-max").innerHTML);
+}
+fetchImpression();
+}
+
+function pageEnd(){
+var page = document.getElementById("biqr-pager-number");
+page.innerHTML = parseInt(document.getElementById("biqr-pager-max").innerHTML);
+fetchImpression();
+}
+
+fetchImpression();
+</script>
