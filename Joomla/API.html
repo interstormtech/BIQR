@@ -82,6 +82,14 @@ $DBarray = array();
 	}	
 
 
+//get user parties 
+if ($method == "get-user-parties") {
+	$sql = "select * from person.MemberParty_Get (?, 0) order by PartyName";
+	$params = array($userID);
+	$stmt = sqlsrv_query( $conn, $sql, $params);
+}	
+
+
 //get party list for drop down selection in header
 	if ($method == "get-party-list") {
 		$sql = "exec person.MemberParty_GetHTML ?";

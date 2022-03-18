@@ -3,7 +3,6 @@
 	font-size:16px;
 	border-bottom: 1px solid #C8C8C8;
 	padding: 0px 10px 0px 10px;
-	display:table;
 }
 
 .biqr-party-post {
@@ -19,13 +18,10 @@
 }
 
 .biqr-party-highlight{
-	display:inline-block;
+	display:table-cell;
 	vertical-align:middle;
-	position:relative;
-	z-index:-1;
 	text-align:right;
 	padding-right:10px;
-	float:right;
 }
 
 h4 {
@@ -68,56 +64,51 @@ h4 {
 
 </style>
 
-<?php
-//get userid and passed values
-$user =& JFactory::getUser();
-$userID = $user->id;
-
-//database configure
-require_once './interstorm/dbconnect.php';
-
-
-$sql = "select * from person.MemberParty_Get (?, 0) order by PartyName";
-$params = array($userID);
-$stmt = sqlsrv_query($conn, $sql, $params);
-
-$rowCount = 0;
-while($row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC))
-{
-$rowCount = $rowCount + 1;
-
-if ($rowCount == 1) {
-	echo "
+<div>
 	<div style='padding:30px 0px 2px 0px; max-width:1320px; margin:auto;'>
 		<div style='padding-left:10px;'><h4>My Parties and Members<h4></div>
-		<div style='border-top:1px solid #C8C8C8;'>";
-}
 
-$msg = $row['PartyName'];
+			<div id="biqr-party-list-area" style="border-top:1px solid #c8c8c8;"></div>
 
-echo " <div class='biqr-party-row'>
-	<div class='biqr-party-post'>
-	<a href='parties\party?p=".$row['PartyPublicKey']."'>
-	".$msg."
-	</a>
-	</div>
-	<div class='biqr-party-highlight'><h4>".$row['MemberCount']."</h4></div>
-	</div>";
-}
-
-if ($rowCount > 0) {
-	echo "
+		</div>
 	</div>
 
 	<div class='biqr-pager-area'>
-	<div class='biqr-pager-outside'><i class='fas fa-angle-double-left'></i></div>
-	<div class='biqr-pager-inside'><i class='fas fa-angle-left'></i></div>
-	<div id='biqr-pager-number'>1</div>
-	<div class='biqr-pager-inside'><i class='fas fa-angle-right'></i></div>
-	<div class='biqr-pager-outside'><i class='fas fa-angle-double-right'></i></div>
+		<div class='biqr-pager-outside'><i class='fas fa-angle-double-left'></i></div>
+		<div class='biqr-pager-inside'><i class='fas fa-angle-left'></i></div>
+		<div id='biqr-pager-number'>1</div>
+		<div class='biqr-pager-inside'><i class='fas fa-angle-right'></i></div>
+		<div class='biqr-pager-outside'><i class='fas fa-angle-double-right'></i></div>
+		<div style="text-align:center; color:#c8c8c8;">pager not active</div>
 	</div>
+	
+</div>
+<div class='biqr-break'></div>
 
-	</div>
-	<div class='biqr-break'></div>";
+<script>
+const apiURL = "https://biqr.me/data-service/v1";
+
+fetchParties();
+
+function fetchParties(){
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			dataAPI = this.responseText;
+			dataObj = JSON.parse(dataAPI);
+
+			var o = "";
+			for (var i = 0; i < dataObj.length; i++) {
+				o = o + "<div class='biqr-party-row'><div class='biqr-party-post'><a href='parties\party?p='>"+dataObj[i].PartyName+"</a></div><div class='biqr-party-highlight'><h4>"+dataObj[i].MemberCount+"</h4></div></div>";
+				//document.getElementById("biqr-post-" + i.toString()).innerHTML = dataObj[i].PostTextFull;
+			}
+			document.getElementById("biqr-party-list-area").innerHTML = o;
+		}
+	};
+
+	var URL = apiURL + "?method=get-user-parties";
+	xhttp.open("GET", URL, false);
+	xhttp.send();
 }
-?>
+
+</script>
