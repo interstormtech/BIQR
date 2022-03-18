@@ -24,6 +24,7 @@
 	$publicID = htmlspecialchars($_REQUEST['publicid']);		
 	$searchTerm = htmlspecialchars($_REQUEST['search-term']);
 	$searchType = htmlspecialchars($_REQUEST['search-type']);
+	$sort = htmlspecialchars($_REQUEST['sort']);
 	$tagType = htmlspecialchars($_REQUEST['tag-type']);
 	$userName = htmlspecialchars($_REQUEST['user']);
 
@@ -43,16 +44,16 @@ $DBarray = array();
 
 //call for getting the comment while recording the swipe direction on the current
 	if ($method == "comment-next") {
-		$sql = "exec post.PostResponse_NextComment ?, ?, ?, ?, 1, 1";
-		$params = array($userID, $postPublicID, $commentPublicID, $direction);
+		$sql = "exec post.PostResponse_NextComment ?, ?, ?, ?, 1, 1, ?";
+		$params = array($userID, $postPublicID, $commentPublicID, $direction, $sort);
 		$stmt = sqlsrv_query( $conn, $sql, $params);
 	}
 	
 	
 //call for getting the comment list (already swiped)
 	if ($method == "comment-list") {
-		$sql = "exec post.PostResponse_NextComment ?, ?, ?, ?, 2, ?";
-		$params = array($userID, $postPublicID, "", $direction, $page);
+		$sql = "exec post.PostResponse_NextComment ?, ?, ?, ?, 2, ?, ?";
+		$params = array($userID, $postPublicID, "", $direction, $page, $sort);
 		$stmt = sqlsrv_query( $conn, $sql, $params);
 	}	
 

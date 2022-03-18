@@ -574,7 +574,7 @@ function fetchComment(direction){
 		}
 	};
 
-	var URL = apiURL + "?method=comment-next&direction="+direction+"&postpublicid="+document.getElementById("biqr-val-post-public-id").innerHTML+"&commentpublicid="+document.getElementById("biqr-val-comment-public-id").innerHTML;
+	var URL = apiURL + "?method=comment-next&direction="+direction+"&postpublicid="+document.getElementById("biqr-val-post-public-id").innerHTML+"&commentpublicid="+document.getElementById("biqr-val-comment-public-id").innerHTML+"&sort="+document.getElementById("biqr-comment-ddl-list").value;
 	xhttp.open("GET", URL, false);
 	xhttp.send();
 }
@@ -600,9 +600,20 @@ function fetchCommentList(direction){
 		}
 	};
 	
-	var URL = apiURL + "?method=comment-list&direction="+direction+"&postpublicid="+document.getElementById("biqr-val-post-public-id").innerHTML+"&page="+document.getElementById("biqr-val-hist").innerHTML;
+	var URL = apiURL + "?method=comment-list&direction="+direction+"&postpublicid="+document.getElementById("biqr-val-post-public-id").innerHTML+"&page="+document.getElementById("biqr-val-hist").innerHTML+"&sort="+document.getElementById("biqr-comment-ddl-list").value;
 	xhttp.open("GET", URL, false);
 	xhttp.send();
+}
+
+function commentResort(){
+	var commentIcon = document.getElementById("biqr-footer-comment-icon");	
+	if (commentIcon.innerHTML.includes("slash")) {
+		//comment list
+		fetchCommentList("");
+	} else {
+		//comment add
+		fetchComment("");
+	}
 }
 		
 function setBiqrPage(event, location) {
@@ -917,6 +928,14 @@ function buildChartGrid() {
 				
 				<div id='biqr-comment-sort-row' class='biqr-header-top-row' style='display:none;'>
 					Sort comments by:
+					<div style='display:inline-block;'>
+						<select name='biqr-comment-ddl-list' id='biqr-comment-ddl-list' style='width: 250px; border:none; background-color:transparent; color:#C8C8C8; height:24px; padding:0px 0px 0px 8px;' onchange='commentResort()'>
+							<option value='0'>Author Credibility</option>
+							<option value='1'>Followed Authors</option>
+							<option value='2'>Newest Comments</option>
+							<option value='3'>Oldest Comments</option>
+						</select>
+					</div>
 				</div>
 				
 				<div id='biqr-post-auth-row' class='biqr-auth-row' style='display:none;'>
