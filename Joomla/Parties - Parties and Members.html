@@ -1,0 +1,123 @@
+<style>
+.biqr-party-row {
+	font-size:16px;
+	border-bottom: 1px solid #C8C8C8;
+	padding: 0px 10px 0px 10px;
+	display:table;
+}
+
+.biqr-party-post {
+	display:inline-block;
+	vertical-align:middle;
+	width:100%;
+	display:table-cell;
+}
+
+.biqr-party-post a {
+	color:#333333;
+	text-decoration:none;
+}
+
+.biqr-party-highlight{
+	display:inline-block;
+	vertical-align:middle;
+	position:relative;
+	z-index:-1;
+	text-align:right;
+	padding-right:10px;
+	float:right;
+}
+
+h4 {
+	font-family: 'Fjalla One', sans-serif !important;
+	display:inline-block;
+	padding-top: 8px;
+}
+
+.biqr-pager-outside {
+	display:inline-block;
+	font-size:24px;
+	vertical-align: middle;
+}
+
+.biqr-pager-inside {
+	display:inline-block;
+	font-size:24px;
+	margin:0px 15px 0px 15px;
+	vertical-align: middle;
+}
+
+.biqr-pager-area {
+	width:100%;
+	text-align:center;
+}
+
+#biqr-pager-number{
+	display:inline-block;
+	font-size:15px;
+	font-weight: bold;
+	margin:0px 15px 0px 15px;
+	vertical-align: middle;
+}
+
+.biqr-break{
+	height:50px;
+	background-color:#0A4B7B;
+	width:100%;
+}
+
+</style>
+
+<?php
+//get userid and passed values
+$user =& JFactory::getUser();
+$userID = $user->id;
+
+//database configure
+require_once './interstorm/dbconnect.php';
+
+
+$sql = "select * from person.MemberParty_Get (?, 0) order by PartyName";
+$params = array($userID);
+$stmt = sqlsrv_query($conn, $sql, $params);
+
+$rowCount = 0;
+while($row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC))
+{
+$rowCount = $rowCount + 1;
+
+if ($rowCount == 1) {
+	echo "
+	<div style='padding:30px 0px 2px 0px; max-width:1320px; margin:auto;'>
+		<div style='padding-left:10px;'><h4>My Parties and Members<h4></div>
+		<div style='border-top:1px solid #C8C8C8;'>";
+}
+
+$msg = $row['PartyName'];
+
+echo " <div class='biqr-party-row'>
+	<div class='biqr-party-post'>
+	<a href='parties\party?p=".$row['PartyPublicKey']."'>
+	".$msg."
+	</a>
+	</div>
+	<div class='biqr-party-highlight'><h4>".$row['MemberCount']."</h4></div>
+	</div>";
+}
+
+if ($rowCount > 0) {
+	echo "
+	</div>
+
+	<div class='biqr-pager-area'>
+	<div class='biqr-pager-outside'><i class='fas fa-angle-double-left'></i></div>
+	<div class='biqr-pager-inside'><i class='fas fa-angle-left'></i></div>
+	<div id='biqr-pager-number'>1</div>
+	<div class='biqr-pager-inside'><i class='fas fa-angle-right'></i></div>
+	<div class='biqr-pager-outside'><i class='fas fa-angle-double-right'></i></div>
+	</div>
+
+	</div>
+	<div class='biqr-break'></div>";
+}
+?>
