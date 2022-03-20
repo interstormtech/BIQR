@@ -5,6 +5,25 @@
 	padding: 0px 10px 0px 10px;
 }
 
+.biqr-icon {
+	display:table-cell; 
+	vertical-align:middle; 
+	padding-right:20px;
+}
+
+.biqr-icon a {
+	color:#333333;
+	text-decoration:none;
+}
+
+.icon-grey a {
+	color:#C8C8C8 !important;
+}
+
+.icon-grey {
+	color:#C8C8C8 !important;
+}
+
 .biqr-party-post {
 	display:inline-block;
 	vertical-align:middle;
@@ -96,13 +115,7 @@ function fetchParties(){
 		if (this.readyState == 4 && this.status == 200) {
 			dataAPI = this.responseText;
 			dataObj = JSON.parse(dataAPI);
-
-			var o = "";
-			for (var i = 0; i < dataObj.length; i++) {
-				o = o + "<div class='biqr-party-row'><div class='biqr-party-post'><a href='parties\party?p='>"+dataObj[i].PartyName+"</a></div><div class='biqr-party-highlight'><h4>"+dataObj[i].MemberCount+"</h4></div></div>";
-				//document.getElementById("biqr-post-" + i.toString()).innerHTML = dataObj[i].PostTextFull;
-			}
-			document.getElementById("biqr-party-list-area").innerHTML = o;
+			document.getElementById("biqr-party-list-area").innerHTML = dataObj[0].PartyListHTML;
 		}
 	};
 
@@ -110,5 +123,25 @@ function fetchParties(){
 	xhttp.open("GET", URL, false);
 	xhttp.send();
 }
+
+function togglePartyFav(PartyPublicID,i) {
+	var partyFav = document.getElementById("biqr-post"+i.toString());
+	if (partyFav.innerHTML.includes("icon-grey")) {
+		//not selected > make followed
+		partyFav.innerHTML = "<i class='fas fa-plus-circle'></i>";
+	} else if (partyFav.innerHTML.includes("fa-plus-circle")) {
+		//followed > make favorite
+		partyFav.innerHTML = "<i class='fas fa-chevron-circle-up'></i>";
+	} else {
+		//make unselected
+		partyFav.innerHTML = "<i class='fas fa-plus-circle icon-grey'></i>";
+	}
+		
+	var xhttp = new XMLHttpRequest();
+	var URL = apiURL + "?method=favorite-tag&tag-type=party&type=1&publicid="+encodeURI(PartyPublicID);
+	xhttp.open("POST", URL, true);
+	xhttp.send();
+}
+
 
 </script>

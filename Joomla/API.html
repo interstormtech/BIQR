@@ -26,8 +26,12 @@
 	$searchType = htmlspecialchars($_REQUEST['search-type']);
 	$sort = htmlspecialchars($_REQUEST['sort']);
 	$tagType = htmlspecialchars($_REQUEST['tag-type']);
+	$type = htmlspecialchars($_REQUEST['type']);
 	$userName = htmlspecialchars($_REQUEST['user']);
 
+	if(!isset($type)) {
+		$type = 0;
+	}
 
 //generic objects used below
 $DBarray = array();
@@ -76,15 +80,15 @@ $DBarray = array();
 	
 //call for marking something as a favorite (post / party / post-author (comment-author)
 	if ($method == "favorite-tag") {
-		$sql = "exec post.Favorite_Set ?, ?, ?";
-		$params = array($userID, $publicID, $tagType);
+		$sql = "exec post.Favorite_Set ?, ?, ?, ?";
+		$params = array($userID, $publicID, $tagType, $type);
 		$stmt = sqlsrv_query( $conn, $sql, $params);
 	}	
 
 
 //get user parties 
 if ($method == "get-user-parties") {
-	$sql = "select * from person.MemberParty_Get (?, 0) order by PartyName";
+	$sql = "exec person.MemberParty_GetHTML_List ? ";
 	$params = array($userID);
 	$stmt = sqlsrv_query( $conn, $sql, $params);
 }	
