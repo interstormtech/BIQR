@@ -36,6 +36,11 @@
 	text-decoration:none;
 }
 
+.biqr-party-row-grey {
+	color:#C8C8C8 !important;
+}
+
+
 .biqr-party-highlight{
 	display:table-cell;
 	vertical-align:middle;
@@ -126,15 +131,23 @@ function fetchParties(){
 
 function togglePartyFav(PartyPublicID,i) {
 	var partyFav = document.getElementById("biqr-post"+i.toString());
+	var partyText = document.getElementById("biqr-post-text"+i.toString());
+	var partyHighlight = document.getElementById("biqr-post-highlight"+i.toString());
 	if (partyFav.innerHTML.includes("icon-grey")) {
 		//not selected > make followed
 		partyFav.innerHTML = "<i class='fas fa-plus-circle'></i>";
+		partyText.classList.remove("biqr-party-row-grey");
+		partyHighlight.classList.remove("biqr-party-row-grey");
 	} else if (partyFav.innerHTML.includes("fa-plus-circle")) {
 		//followed > make favorite
 		partyFav.innerHTML = "<i class='fas fa-chevron-circle-up'></i>";
+		partyText.classList.remove("biqr-party-row-grey");
+		partyHighlight.classList.remove("biqr-party-row-grey");
 	} else {
 		//make unselected
 		partyFav.innerHTML = "<i class='fas fa-plus-circle icon-grey'></i>";
+		partyText.classList.add("biqr-party-row-grey");
+		partyHighlight.classList.add("biqr-party-row-grey");
 	}
 		
 	var xhttp = new XMLHttpRequest();

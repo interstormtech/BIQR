@@ -1,0 +1,171 @@
+<style>
+.biqr-party-row {
+    font-size:16px;
+    border-bottom: 1px solid #C8C8C8;
+    padding: 0px 10px 0px 10px;
+}
+
+.biqr-icon {
+    display:table-cell; 
+    vertical-align:middle; 
+    padding-right:20px;
+}
+
+.biqr-icon a {
+    color:#333333;
+    text-decoration:none;
+}
+
+.icon-grey a {
+    color:#C8C8C8 !important;
+}
+
+.icon-grey {
+    color:#C8C8C8 !important;
+}
+
+.biqr-party-post {
+    display:inline-block;
+    vertical-align:middle;
+    width:100%;
+    display:table-cell;
+}
+
+.biqr-party-post a {
+    color:#333333;
+    text-decoration:none;
+}
+
+.biqr-party-row-grey {
+    color:#C8C8C8 !important;
+}
+
+
+.biqr-party-highlight{
+    display:table-cell;
+    vertical-align:middle;
+    text-align:right;
+    padding-right:10px;
+}
+
+h4 {
+    font-family: 'Fjalla One', sans-serif !important;
+    display:inline-block;
+    padding-top: 8px;
+}
+
+.biqr-pager-outside {
+    display:inline-block;
+    font-size:24px;
+    vertical-align: middle;
+}
+
+.biqr-pager-inside {
+    display:inline-block;
+    font-size:24px;
+    margin:0px 15px 0px 15px;
+    vertical-align: middle;
+}
+
+.biqr-pager-area {
+    width:100%;
+    text-align:center;
+}
+
+#biqr-pager-number{
+    display:inline-block;
+    font-size:15px;
+    font-weight: bold;
+    margin:0px 15px 0px 15px;
+    vertical-align: middle;
+}
+
+.biqr-break{
+    height:50px;
+    background-color:#0A4B7B;
+    width:100%;
+}
+
+.icon-avatar {
+	vertical-align:middle; 
+	font-size:24px; 
+	padding-right:9px;
+}
+
+
+</style>
+
+<div style='max-width:1320px;margin:auto auto;'>
+    <div style='padding:30px 0px 2px 0px; max-width:1320px; margin:auto;'>
+        <div id='biqr-party-name' style='padding-left:10px; padding-bottom:25px;'></div>
+        <div style='padding-left:10px;'><h4>Member Credibility Index<h4></div>
+
+        <div id="biqr-party-list-area" style="border-top:1px solid #c8c8c8;"></div>
+
+        <div class='biqr-pager-area'>
+            <div class='biqr-pager-outside'><i class='fas fa-angle-double-left'></i></div>
+            <div class='biqr-pager-inside'><i class='fas fa-angle-left'></i></div>
+            <div id='biqr-pager-number'>1</div>
+            <div class='biqr-pager-inside'><i class='fas fa-angle-right'></i></div>
+            <div class='biqr-pager-outside'><i class='fas fa-angle-double-right'></i></div>
+            <div style="text-align:center; color:#c8c8c8;">pager not active</div>
+        </div>
+    </div>
+</div>
+
+<div class='biqr-break'></div>
+
+<div style='max-width:1320px;margin:auto auto;'>
+    <div style='padding:30px 0px 2px 0px; max-width:1320px; margin:auto;'>
+        <div style='padding-left:10px;'><h4>Most Recent Posts<h4></div>
+
+        <div id="biqr-party-post-area" style="border-top:1px solid #c8c8c8;"></div>
+
+    </div>
+</div>
+
+<div id='biqr-partypublickey' style='display:none;'><?php echo htmlspecialchars($_REQUEST['p']);?></div>
+
+<script>
+const apiURL = "https://biqr.me/data-service/v1";
+
+setPage();
+
+function setPage(){
+    fetchPartyPeople();
+    fetchPartyPostList();
+}
+
+function fetchPartyPeople(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            dataAPI = this.responseText;
+            dataObj = JSON.parse(dataAPI);
+            document.getElementById("biqr-party-name").innerHTML = "<h4>"+dataObj[0].PartyName+" Party Details</h4>"
+            document.getElementById("biqr-party-list-area").innerHTML = dataObj[0].PartyPersonListHTML;
+        }
+    };
+
+    var URL = apiURL + "?method=get-party-person-list&partypublicid="+document.getElementById("biqr-partypublickey").innerHTML;
+    xhttp.open("GET", URL, false);
+    xhttp.send();
+}
+
+function fetchPartyPostList(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            dataAPI = this.responseText;
+            dataObj = JSON.parse(dataAPI);
+            document.getElementById("biqr-party-post-area").innerHTML = dataObj[0].PostList;
+        }
+    };
+
+    var URL = apiURL + "?method=party-post-list&partypublicid="+document.getElementById("biqr-partypublickey").innerHTML;
+    xhttp.open("GET", URL, false);
+    xhttp.send();
+}
+
+    
+</script>

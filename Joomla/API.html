@@ -45,6 +45,12 @@ $DBarray = array();
 		$stmt = sqlsrv_query( $conn, $sql, $params);
 	}
 
+//call for most recent posts (10) for given party
+	if ($method == "party-post-list") {
+		$sql = "post.PostList_Get ?";
+		$params = array($partyPublicID);
+		$stmt = sqlsrv_query( $conn, $sql, $params);
+	}
 
 //call for getting the comment while recording the swipe direction on the current
 	if ($method == "comment-next") {
@@ -101,6 +107,12 @@ if ($method == "get-user-parties") {
 		$stmt = sqlsrv_query( $conn, $sql, $params);
 	}	
 
+//get party person details
+	if ($method == "get-party-person-list") {
+		$sql = "exec person.PartyPerson_GetHTML ?";
+		$params = array($partyPublicID);
+		$stmt = sqlsrv_query( $conn, $sql, $params);
+	}	
 
 //get dashboard user stats
 	if ($method == "user_stats") {
