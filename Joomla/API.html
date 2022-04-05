@@ -129,6 +129,13 @@ if ($method == "get-user-parties") {
 		$stmt = sqlsrv_query( $conn, $sql, $params);	
 	}
 
+//get bug tracking
+	if ($method == "tracker") {
+		$sql = "exec log.tracker_get";
+		$stmt = sqlsrv_query( $conn, $sql);	
+	}
+
+
 
 //end method list 
 //ensure DB didn't fail

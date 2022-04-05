@@ -1,0 +1,91 @@
+<style>
+.biqr-button {
+	height: auto;
+	margin: 10px 0px 10px 0px;
+	line-height: normal;
+	width:100%;
+	border: none;
+	outline: 0;
+	text-transform: none;
+	box-shadow: none;
+	cursor: pointer;
+	transition: all 200ms ease;
+	border-radius:3px;
+	color:#ffffff;
+	font-size:15px;
+	height:40px;
+	display:inline-block;
+    background-color: #333333;
+}
+
+.biqr-grid-row {
+    padding: 10px 0 10px 0;
+    border-bottom: 1px solid #C8C8C8;
+}
+</style>
+
+<div style='max-width:1320px;margin:auto auto;'>
+    <h4>Bug and Idea Tracking</h4>
+    <div>Use the below form to enter any bugs found or any specific ideas for the site.</div>
+    <div style="padding-top:50px;">
+        <form id='biqr-tracker' name='biqr-tracker' action="<?php echo htmlspecialchars($PHP_SELF);?>" method='post'>
+
+            <textarea id="biqr-tracker-text" name="biqr-tracker-text" style="width:100%; height:200px;" placeholder="Enter details here..."></textarea>
+            <button id='tracker-submit' type='button' onclick='submitForm();' class='biqr-button'>Submit</button>
+        
+        </form>
+    </div>
+
+
+    <?php
+    //handle postback of form
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+        //set up database connection
+        require_once './interstorm/dbconnect.php';
+    
+        //get userid and passed values
+        $user =& JFactory::getUser();
+        $userID = $user->id;
+        $trackerText = htmlspecialchars($_POST['biqr-tracker-text']);
+        
+        $trackerText = $_POST['biqr-tracker-text'];
+        echo "<div style='width:100%; background-color:#00a6ed; margin-top:25px; padding:10px; color:#ffffff; font-weight:bold; text-align:center;'> Item entered! </div>";
+    
+        //save tracked item 
+        $sql = "exec log.Tracker_Set ?, ?";
+        $params = array($userID, $trackerText);
+        $stmt = sqlsrv_query( $conn, $sql, $params);
+        
+    }
+    ?>
+    
+    <div style="padding-top:80px;"><h4>Entered Items</h4></div>
+    <div id="tracker-list" style="border-top:1px solid #C8C8C8;"></div>
+</div>
+
+<script>
+const apiURL = "https://biqr.me/data-service/v1";
+
+fetchTracker();
+
+function fetchTracker(){
+    var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			dataAPI = this.responseText;
+			dataObj = JSON.parse(dataAPI);
+			document.getElementById("tracker-list").innerHTML = dataObj[0].HTMLText;
+		}
+	};
+
+	var URL = apiURL + "?method=tracker";
+	xhttp.open("GET", URL, false);
+	xhttp.send();
+}
+
+function submitForm(){
+    document.getElementById("biqr-tracker").submit();
+}
+
+</script>
